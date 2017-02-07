@@ -5,3 +5,11 @@ Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumn
 Description: General raster grids.
 License: GPL-3
 LazyData: true
+Imports: 
+    dplyr, 
+    ncdump,
+    
+    raster
+Suggests:
+    testthat
+RoxygenNote: 5.0.1

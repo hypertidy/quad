@@ -94,14 +94,14 @@ rastergetslice <- function(x, slice) {
 #' @param x ROMS file name
 #' @param varname variable name
 #' @param slice index, specified with NA for the index to read all steps
-#'
+#' @importFrom dplyr %>% 
 #' @export
-ncraster <- function(x, varname, slice) {
-  nc <- rancid::NetCDF(x)
+ncraster <- function(x, varname, slice = NA) {
+  nc <- ncdump::NetCDF(x)
   vd <- ## how is order controlled here?
-    rancid::vars(nc) %>% filter(name == varname) %>% 
+    ncdump::vars(nc) %>% filter(name == varname) %>% 
     inner_join(nc$vardim, "id") %>% transmute(vid = id, id = dimids) %>% 
-    inner_join(dims(nc), "id")
+    inner_join(ncdump::dims(nc), "id")
   ## if slice is NA, we get all
   start <- ifelse(is.na(slice), 1, slice)
   count <- ifelse(is.na(slice), vd$len, 1)
