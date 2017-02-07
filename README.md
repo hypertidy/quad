@@ -5,6 +5,12 @@ qwad
 
 WIP
 
+ncdump to only provide information about the file
+
+qwad is the raster-based read that uses ncdump tools
+
+a limitation in angstroms is that it is only suited to ...
+
 rancid previously made useable versions of NetCDF metadata in tibble form
 
 angstroms created tools to work with irregular grids in ROMS.
@@ -17,6 +23,12 @@ angstroms will leverage ncdump and qwad.
 
 See tabularaster for an independent model for organizing grids like these. A future version will try to merge these two ways of working.
 
+TODO
+
+-   don't make qwadmap(x, coords) the working model, it should more like
+
+qwadmap(x, file, varname) qwadmap(x, var)
+
 Installation
 ------------
 
@@ -24,7 +36,7 @@ You can install qwad from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("AustralianAntarcticDivision/qwad")
+devtools::install_github("mdsumner/qwad")
 ```
 
 Example
