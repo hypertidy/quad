@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
 
 # qwad
 
+WIP
+
+
 rancid previously made useable versions of NetCDF metadata in tibble form
 
 angstroms created tools to work with irregular grids in ROMS. 
@@ -46,7 +49,6 @@ This is a basic example which shows you how to solve a common problem:
 
 
 
-[![Travis-CI Build Status](https://travis-ci.org/mdsumner/qwad.svg?branch=master)](https://travis-ci.org/mdsumner/qwad)
 
 ## qwad
 
