@@ -1,16 +1,30 @@
-## these should all be in rancid?
-## if so must be exported . . .
 
-
-#' NetCDF variable dimension
+#' Find the name of the first multi-dimensional grid. 
+#' 
+#' The first variable name with the maximum number of dimensions is returned. 
+#' Optionally a `maxdim` may be set to return the first no larged than that value. 
 #'
-#' This belongs in rancid . . .
+#' @param x 
+#' @param maxdim 
+#' @param ... 
+first_md_grid <- function(x, maxdim = Inf, ...) {
+  UseMethod("first_md_grid")
+}
+first_md_grid.character <- function(x, maxdim = Inf, ...) {
+  first_md_grid(ncdump::NetCDF(x))
+}
+first_md_grid.NetCDF <- function(x, maxdim = Inf, ...) {
+  #return(x$variable)
+  v <- x$variable %>% filter(ndims <= maxdim)%>% mutate(dmax = max(ndims)) %>% filter(ndims == dmax) %>% slice(1L)
+  v$name[1L]
+}
+
+
+#'  NetCDF variable dimension
+#'
 #'
 #' @param varname variable name
 #' @param x file
-#'
-#' @export
-#'
 #' @importFrom dplyr transmute
 ncdim <- function(x, varname) {
   roms <- NetCDF(x)
@@ -25,38 +39,6 @@ ncdim <- function(x, varname) {
 
 
 
-#' Extract a data layer from ROMS by name and slice. 
-#' 
-#' Maybe this replaced by rastergetslice??
-#' Returns a single slice 2D layer
-#'
-#' @param x ROMS file name
-#' @param varname name of ROMS variable 
-#' @param slice index in w and t (depth and time), defaults to first encountered
-#' @param transpose the extents (ROMS is FALSE, Access is TRUE)
-#' @param ... unused
-#' @param ncdf default to \code{TRUE}, set to \code{FALSE} to allow raster format detection brick
-#'
-#' @return RasterLayer
-#' @export
-#'
-romsdata <- function (x, varname, slice = c(1, 1), ncdf = TRUE, transpose = FALSE, ...) 
-{
-   stopifnot(!missing(varname))
-   x0 <- try(brick(x, level = slice[1L], varname = varname, ncdf = ncdf, ...), silent = TRUE)
-  if (inherits(x0, "try-error")) {
-     ## 
-    stop(sprintf("%s is not multi-dimensional/interpretable as a RasterLayer, try extracting in raw form with rawdata()", varname))
-    
-    }
-  x <- x0[[slice[2L]]]
-   if (transpose) {
-    e <- extent(0, ncol(x), 0, nrow(x)) 
-   } else {
-   e <- extent(0, nrow(x), 0, ncol(x))
-   }
-  setExtent(x, e)
-}
 
 #' Read the variable as is
 #' @export
@@ -89,31 +71,36 @@ rastergetslice <- function(x, slice) {
 
 
 
-#' Read an arbitrary 2D or 3D slice from NetCDF as a RasterBrick
-#' 
-#' @param x ROMS file name
-#' @param varname variable name
-#' @param slice index, specified with NA for the index to read all steps
-#' @importFrom dplyr %>% 
-#' @export
-ncraster <- function(x, varname, slice = NA) {
-  nc <- ncdump::NetCDF(x)
-  vd <- ## how is order controlled here?
-    ncdump::vars(nc) %>% filter(name == varname) %>% 
-    inner_join(nc$vardim, "id") %>% transmute(vid = id, id = dimids) %>% 
-    inner_join(ncdump::dims(nc), "id")
-  ## if slice is NA, we get all
-  start <- ifelse(is.na(slice), 1, slice)
-  count <- ifelse(is.na(slice), vd$len, 1)
- # print(start)
-#  print(count)
-  a <- ncgetslice(x, varname, start, count)
-  if (length(dim(a)) == 2) {
-    a <- a[, ncol(a):1 ]
-    a <- setExtent(raster(t(a)), extent(0, nrow(a), 0, ncol(a)))
-  } else {
-    a <- a[,ncol(a):1,]
-    a <- setExtent(brick(a,  transpose = TRUE)  , extent(0, nrow(a), 0, ncol(a)))
+
+
+
+## worker functions for ROMS netcdf and R raster
+mkget <- function(filename) {
+  function(varname, start = NA, count = NA) {
+    on.exit(nc_close(handle))
+    handle <- nc_open(filename)
+    ncvar_get(handle, varname, start, count)
   }
+}
+
+applyget <- function(vars) {
+  a <- vector("list", length(vars))
+  names(a) <- vars
+  for (i in seq_along(vars)) a[[vars[i]]] <- getr(vars[i])
   a
 }
+
+
+setIndexExt <- function(x) {
+  ex <- extent(1, ncol(x), 1, nrow(x))
+  setExtent(x, ex)
+}
+nctor <- function(x) {
+  if (length(dim(x)) == 2) {
+    x <- flip(raster(t(x)), "y")
+  } else {
+    if (length(dim(x)) == 3) x <- flip(brick(x, transpose = TRUE), "y")
+  } 
+  setIndexExt(x)
+}
+

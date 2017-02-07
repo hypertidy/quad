@@ -12,6 +12,6 @@ ncdim(x, varname)
 \item{varname}{variable name}
 }
 \description{
-This belongs in rancid . . .
+NetCDF variable dimension
 }
 
