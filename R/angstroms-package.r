@@ -1,9 +1,7 @@
-#' angstroms.
+#' qwad.
 #' 
 #'  
-#' @name angstroms
-#' @aliases angstroms-package
+#' @name qwad
+#' @aliases qwad-package
 #' @docType package
-#' @importFrom graphics lines plot points
-#' @importFrom stats filter
 NULL

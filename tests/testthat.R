@@ -1,4 +1,4 @@
 library(testthat)
-library(angstroms)
+library(qwad)
 
-test_check("angstroms")
+test_check("qwad")

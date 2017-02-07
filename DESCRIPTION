@@ -1,20 +1,7 @@
-Package: angstroms
-Title: Tools for ROMS in R
+Package: qwad
+Title: Multi Dimensional Raster Grids
 Version: 0.0.0.9000
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com")
-Description: Helper functions for working with Regional Ocean Modelling System (ROMS) output.
-Depends:
-    raster
+Description: General raster grids.
 License: GPL-3
 LazyData: true
-Imports:
-    dplyr,
-    nabor,
-    ncdf4,
-    proj4,
-    rancid,
-    sp,
-    spbabel
-Remotes: mdsumner/spbabel, mdsumner/rancid
-RoxygenNote: 5.0.1
-Suggests: testthat
