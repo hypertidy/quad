@@ -1,63 +1,55 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-qwad
-====
 
-WIP
+# quad
 
-ncdump to only provide information about the file
+<!-- badges: start -->
+<!-- badges: end -->
 
-qwad is the raster-based read that uses ncdump tools
+The goal of quad is to …
 
-a limitation in angstroms is that it is only suited to ...
+## Installation
 
-rancid previously made useable versions of NetCDF metadata in tibble form
-
-angstroms created tools to work with irregular grids in ROMS.
-
-The rancid "ncdump" output is now in "ncdump"
-
-The irregular grid tools will live in qwad.
-
-angstroms will leverage ncdump and qwad.
-
-See tabularaster for an independent model for organizing grids like these. A future version will try to merge these two ways of working.
-
-TODO
-
--   don't make qwadmap(x, coords) the working model, it should more like
-
-qwadmap(x, file, varname) qwadmap(x, var)
-
-Installation
-------------
-
-You can install qwad from github with:
+You can install the development version of quad from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("mdsumner/qwad")
+devtools::install_github("hypertidy/quad")
 ```
 
-Example
--------
+## Example
 
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
+library(quad)
 ## basic example code
 ```
 
-qwad
-----
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
 
-Qwad aims to make working with general grids as easy as possible and less *awkward*. Rather than deal explicitly with the complexity of grids directly, the approach simplifies this by:
+``` r
+summary(cars)
+#>      speed           dist       
+#>  Min.   : 4.0   Min.   :  2.00  
+#>  1st Qu.:12.0   1st Qu.: 26.00  
+#>  Median :15.0   Median : 36.00  
+#>  Mean   :15.4   Mean   : 42.98  
+#>  3rd Qu.:19.0   3rd Qu.: 56.00  
+#>  Max.   :25.0   Max.   :120.00
+```
 
--   maintaining the internal index of as the default *georeferencing*
--   providing tools to convert external data data (maps, transects, points, etc.) into the native internal index space of grids
--   providing tools to read arbitrary slices from the grids (either 2D or 3D) as Raster objects
--   providing tools to recover the original full coordinates as needed
+You’ll still need to render `README.Rmd` regularly, to keep `README.md`
+up-to-date. `devtools::build_readme()` is handy for this. You could also
+use GitHub Actions to re-render `README.Rmd` every time you push. An
+example workflow can be found here:
+<https://github.com/r-lib/actions/tree/v1/examples>.
 
-In combination these allow extraction and query from general grids output very easily.
+You can also embed plots, for example:
 
-The ability to deal with time series across multiple files is still in development, though can be used simply now with standard loops.
+<img src="man/figures/README-pressure-1.png" width="100%" />
+
+In that case, don’t forget to commit and push the resulting figure
+files, so they display on GitHub and CRAN.

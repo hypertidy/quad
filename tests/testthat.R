@@ -1,4 +1,4 @@
 library(testthat)
-library(qwad)
+library(quad)
 
-test_check("qwad")
+test_check("quad")
