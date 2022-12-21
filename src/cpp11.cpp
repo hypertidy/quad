@@ -6,16 +6,16 @@
 #include <R_ext/Visibility.h>
 
 // code.cpp
-double sum(cpp11::doubles x);
-extern "C" SEXP _quad_sum(SEXP x) {
+integers qtest_cpp(cpp11::integers nx, cpp11::integers ny, logicals ydown);
+extern "C" SEXP _quad_qtest_cpp(SEXP nx, SEXP ny, SEXP ydown) {
   BEGIN_CPP11
-    return cpp11::as_sexp(sum(cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(x)));
+    return cpp11::as_sexp(qtest_cpp(cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(nx), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(ny), cpp11::as_cpp<cpp11::decay_t<logicals>>(ydown)));
   END_CPP11
 }
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_quad_sum", (DL_FUNC) &_quad_sum, 1},
+    {"_quad_qtest_cpp", (DL_FUNC) &_quad_qtest_cpp, 3},
     {NULL, NULL, 0}
 };
 }
