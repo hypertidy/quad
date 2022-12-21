@@ -4,6 +4,12 @@
 # quad
 
 <!-- badges: start -->
+
+<a href="https://gitpod.io/#https://github.com/hypertidy/quad.git"> <img
+    src="https://img.shields.io/badge/Contribute%20with-Gitpod-908a85?logo=gitpod"
+    alt="Try with Gitpod"
+  /> </a>
+[![R-CMD-check](https://github.com/hypertidy/quad/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypertidy/quad/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of quad is to provide a framework for fleshing out
@@ -51,13 +57,13 @@ fast.
 ##previous we might have used anglr
 system.time(anglr::as.mesh3d(elev))
 #>    user  system elapsed 
-#>   0.041   0.015   0.057
+#>   0.029   0.028   0.059
 
 ## what if it was much bigger
 el <- elev[seq(1, nrow(elev), length.out = 3600), seq(1, ncol(elev), length.out = 1800)]
 system.time(m3d <- anglr::as.mesh3d(el))
 #>    user  system elapsed 
-#>   6.257   2.061   8.319
+#>   6.336   2.052   8.390
 str(m3d)
 #> List of 6
 #>  $ vb       : num [1:4, 1:6485401] 0 0 -3522 1 1 ...
@@ -86,7 +92,7 @@ system.time({
   
 })
 #>    user  system elapsed 
-#>   0.504   0.423   0.927
+#>   0.470   0.462   0.931
 
 str(vb)
 #>  num [1:4, 1:6485401] -180 180 -180 180 -90 ...

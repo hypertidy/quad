@@ -17,6 +17,13 @@ library(anglr)
 # quad
 
 <!-- badges: start -->
+<a href="https://gitpod.io/#https://github.com/hypertidy/quad.git">
+  <img
+    src="https://img.shields.io/badge/Contribute%20with-Gitpod-908a85?logo=gitpod"
+    alt="Try with Gitpod"
+  />
+</a>
+[![R-CMD-check](https://github.com/hypertidy/quad/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypertidy/quad/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of quad is to provide a framework for fleshing out raster-origin mesh geometry when needed. 
