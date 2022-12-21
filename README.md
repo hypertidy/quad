@@ -57,13 +57,13 @@ fast.
 ##previous we might have used anglr
 system.time(anglr::as.mesh3d(elev))
 #>    user  system elapsed 
-#>   0.029   0.028   0.059
+#>   0.040   0.012   0.051
 
 ## what if it was much bigger
 el <- elev[seq(1, nrow(elev), length.out = 3600), seq(1, ncol(elev), length.out = 1800)]
 system.time(m3d <- anglr::as.mesh3d(el))
 #>    user  system elapsed 
-#>   6.336   2.052   8.390
+#>   6.706   1.940   8.645
 str(m3d)
 #> List of 6
 #>  $ vb       : num [1:4, 1:6485401] 0 0 -3522 1 1 ...
@@ -92,7 +92,7 @@ system.time({
   
 })
 #>    user  system elapsed 
-#>   0.470   0.462   0.931
+#>   0.535   0.433   0.968
 
 str(vb)
 #>  num [1:4, 1:6485401] -180 180 -180 180 -90 ...
