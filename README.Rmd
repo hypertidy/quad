@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of quad is to ...
+The goal of quad is to provide a framework for fleshing out raster-origin mesh geometry when needed. 
 
 ## Installation
 
@@ -31,25 +31,48 @@ devtools::install_github("hypertidy/quad")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to expand out the grid when you really need to. 
+
+What is a grid? A *raster* is a six-number specification, *dimension* and *extent*. 
+
+Let's say we have set of raster data, a matrix in R with *ncols*, *nrows* and an extent. 
 
 ```{r example}
 library(quad)
-## basic example code
+
+(dm <- dim(elev)[2:1])
+
+qm <- quad:::qtest(dm)
+
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+That is the basis for building a partly expanded quadmesh, and it is fast. 
 
-```{r cars}
-summary(cars)
+```{r anglr}
+##previous we might have used anglr
+system.time(anglr::as.mesh3d(elev))
+
+## what if it was much bigger
+el <- elev[seq(1, nrow(elev), length.out = 3600), seq(1, ncol(elev), length.out = 1800)]
+system.time(anglr::as.mesh3d(el))
+
+
+## when we use {quad} we have access to the intermediate steps
+
+system.time({
+  q <- quad:::qtest(c(3600, 1800))
+  vb <- matrix(q, nrow = 4)
+  vb[,1] <- scales::rescale(vb[,1], c(-180, 180))
+  vb[,2] <- scales::rescale(vb[,2], c(-90, 90))
+  
+  ## ok still WIP but you see where we're going, anglr needed a 
+  ## RasterLayer *object* just to get that extent scaling (!!!)
+  ## this is faster and it scales to generic workflows   
+})
+
+
 ```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+## Code of Conduct
+  
+Please note that the quad project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
