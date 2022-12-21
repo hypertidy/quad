@@ -106,13 +106,13 @@
 <code class="sourceCode R"><span><span class="co">##previous we might have used anglr</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">anglr</span><span class="fu">::</span><span class="fu">as.mesh3d</span><span class="op">(</span><span class="va">elev</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.029   0.028   0.059</span></span>
+<span><span class="co">#&gt;   0.040   0.012   0.051</span></span>
 <span></span>
 <span><span class="co">## what if it was much bigger</span></span>
 <span><span class="va">el</span> <span class="op">&lt;-</span> <span class="va">elev</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">3600</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">1800</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">m3d</span> <span class="op">&lt;-</span> <span class="fu">anglr</span><span class="fu">::</span><span class="fu">as.mesh3d</span><span class="op">(</span><span class="va">el</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   6.336   2.052   8.390</span></span>
+<span><span class="co">#&gt;   6.706   1.940   8.645</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">m3d</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 6</span></span>
 <span><span class="co">#&gt;  $ vb       : num [1:4, 1:6485401] 0 0 -3522 1 1 ...</span></span>
@@ -141,7 +141,7 @@
 <span>  </span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.470   0.462   0.931</span></span>
+<span><span class="co">#&gt;   0.535   0.433   0.968</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">vb</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:4, 1:6485401] -180 180 -180 180 -90 ...</span></span>
