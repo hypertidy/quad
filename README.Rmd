@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+library(anglr)
 ```
 
 # quad
@@ -42,9 +43,10 @@ library(quad)
 
 (dm <- dim(elev)[2:1])
 
-qm <- quad:::qtest(dm)
-
-
+ib <- quad_index(dm)
+vb <- quad_vert(dm)
+str(ib)
+str(vb)
 ```
 
 That is the basis for building a partly expanded quadmesh, and it is fast. 
@@ -55,24 +57,41 @@ system.time(anglr::as.mesh3d(elev))
 
 ## what if it was much bigger
 el <- elev[seq(1, nrow(elev), length.out = 3600), seq(1, ncol(elev), length.out = 1800)]
-system.time(anglr::as.mesh3d(el))
-
+system.time(m3d <- anglr::as.mesh3d(el))
+str(m3d)
 
 ## when we use {quad} we have access to the intermediate steps
 
 system.time({
-  q <- quad:::qtest(c(3600, 1800))
-  vb <- matrix(q, nrow = 4)
+  vb <- quad_vert(c(3600, 1800))
+  vb <- rbind(matrix(vb, nrow = 2), z = 0.0, h = 1.0)
   vb[,1] <- scales::rescale(vb[,1], c(-180, 180))
   vb[,2] <- scales::rescale(vb[,2], c(-90, 90))
+
+  ib <- matrix(quad_index(c(3600, 1800), ydown = TRUE), nrow = 4L)
   
   ## ok still WIP but you see where we're going, anglr needed a 
-  ## RasterLayer *object* just to get that extent scaling (!!!)
+  ## RasterLayer *object* just to get that extent scaling (!!!), when
+  ## we don't even need an array (it's just dim+extent)
   ## this is faster and it scales to generic workflows   
+  
 })
 
+str(vb)
+str(ib)
 
 ```
+
+
+## TODO
+
+
+- [x] Mercury
+- [ ] ensure alignment of anglr and quad and control with ydown and comparison to rgl is sane and easy
+- [ ] provide flat, matrix, dataframe versions of each output (and compare with {geometries})
+- [ ] bridge to {textures} and other packages that are for specific outputs (mesh3d, and various 3D formats, and just plotting with vectorized grid.polygon)
+
+
 ## Code of Conduct
   
 Please note that the quad project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
