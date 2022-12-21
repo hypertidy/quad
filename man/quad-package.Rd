@@ -4,9 +4,9 @@
 \name{quad-package}
 \alias{quad}
 \alias{quad-package}
-\title{quad: Quadrilateral Stuff for Rasters}
+\title{quad: Intermediate Forms of Raster Grids}
 \description{
-Quads as first class types with helpers.
+Raster grids and quads as first class types with helpers. Provides a low level API for generating mesh index and vertices from the simplest abstraction of raster grid, input dimension and (optionally) extent to generate components of meshes for downstream visualization and efficient coordinate transformation. API functions may be 'Linked To' in the R headers library way.
 }
 \seealso{
 Useful links:

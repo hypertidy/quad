@@ -1,8 +1,12 @@
 Package: quad
-Title: Quadrilateral Stuff for Rasters
+Title: Intermediate Forms of Raster Grids
 Version: 0.0.1
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com")
-Description: Quads as first class types with helpers. 
+Description: Raster grids and quads as first class types with helpers. Provides a low level API
+ for generating mesh index and vertices from the simplest abstraction of raster grid, input
+ dimension and (optionally) extent to generate components of meshes for downstream visualization
+ and efficient coordinate transformation. API functions may be 'Linked To' in the R headers library
+ way. 
 License: MIT + file LICENSE
 Suggests:
     testthat (>= 3.0.0)
